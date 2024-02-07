@@ -4,6 +4,7 @@ import Logo from "./assets/Logo.png";
 import Btncheck from "./assets/btn-check.png";
 import Check from "./assets/check.png";
 import Del from "./assets/del.png";
+import Edit from "./assets/edit.png";
 import "./App.module.scss";
 
 interface item {
@@ -14,7 +15,7 @@ interface item {
 
 const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<item[]>([]);
-
+  const [editText, setEditText] = useState<string>("");
   const [input, setInput] = useState<string>("");
 
   const handleToggle = (id: number) => {
@@ -28,19 +29,38 @@ const TodoList: React.FC = () => {
     );
   };
 
+
+  
+  
+
   const handleClick = () => {
-  if (input.trim() !== "") { // Проверка, что ввод не пустой
-    const newTodo: item = { id: Date.now(), text: input, completed: false };
-    setTodos([...todos, newTodo]);
-    setInput(""); 
-  }
-};
+    if (input.trim() !== "") {
+      const newTodo: item = {
+        id: Date.now(),
+        text: input,
+        completed: false,
+      };
+      setTodos([...todos, newTodo]);
+      setInput(""); 
+    }
+  };
+  
+  
 
 
   const handleDeleteClick = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
   
+  const handleEditClick = (id: number, text: string) => {
+    setEditText(text);
+    setTodos(todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, text: editText };
+      }
+      return todo;
+    }));
+  };
 
   return (
     <div className="main-container">
@@ -51,6 +71,8 @@ const TodoList: React.FC = () => {
         <div className="header-info d-flex justify-center mb-50">
           <input
             type="text"
+            value={input}
+            style={{ paddingLeft: "10px"}}
             placeholder="Добавьте задачу..."
             onChange={(e) => setInput(e.currentTarget.value)}
           />
@@ -74,9 +96,13 @@ const TodoList: React.FC = () => {
                   className="check"
                 />
                 {todo.text}
-                <img src={Del} 
+                <div className="icon1">
+                  <img src={Edit} width={14.5} height={14.5} style={{marginRight: "10px"}} onClick={() => handleEditClick(todo.id, todo.text)}/>
+                  <img src={Del} 
                 onClick={() => handleDeleteClick(todo.id)} 
                 className="del" alt="Nochecked" />
+                </div>
+                
               </li>
             ))}
           </ul>
