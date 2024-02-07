@@ -53,25 +53,13 @@ li{
     padding: 7px;
     margin-bottom: 25px;
     border-radius: 10px;
+    font-size: 15px;
 }
 
 li:hover{
     background-color: #333333;
 }
 
-img.del{
-    background-image: url("/img/del.png");
-}
-
-img.del:hover{
-    background-image:url("/img/trash.png"); 
-    cursor: pointer;
-}
-
-.icons{
-    display: flex;
-    gap: 15px;
-}
 
 @media (max-width: 767px) {
     .todo {
