@@ -15,8 +15,18 @@ interface item {
 
 const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<item[]>([]);
-  const [editText, setEditText] = useState<string>("");
   const [input, setInput] = useState<string>("");
+   
+  
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editText, setEditText] = useState<string>("");
+
+  const handleEditClick = (id: number, text: string) => {
+    setEditId(id);
+    setEditText(text);
+  };
+
+
 
   const handleToggle = (id: number) => {
     setTodos(
@@ -52,15 +62,7 @@ const TodoList: React.FC = () => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
   
-  const handleEditClick = (id: number, text: string) => {
-    setEditText(text);
-    setTodos(todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, text: editText };
-      }
-      return todo;
-    }));
-  };
+  
 
   return (
     <div className="main-container">
@@ -79,33 +81,48 @@ const TodoList: React.FC = () => {
           <button onClick={handleClick}>Добавить +</button>
         </div>
         <div className="content d-flex flex-column align-center mr-40">
-          <ul className="todo-info">
-            {todos.map((todo) => (
-              <li
-                className="todo d-flex align-center justify-between"
-                
-                key={todo.id}
-                style={{
-                  textDecoration: todo.completed ? "line-through" : "none",
-                }}
-              >
-                <img
-                  onClick={() => handleToggle(todo.id)}
-                  src={todo.completed ? Check : Btncheck}
-                  alt="Check"
-                  className="check"
-                />
-                {todo.text}
-                <div className="icon1">
-                  <img src={Edit} width={14.5} height={14.5} style={{marginRight: "10px"}} onClick={() => handleEditClick(todo.id, todo.text)}/>
-                  <img src={Del} 
-                onClick={() => handleDeleteClick(todo.id)} 
-                className="del" alt="Nochecked" />
-                </div>
-                
-              </li>
-            ))}
-          </ul>
+        <ul className="todo-info">
+        {todos.map((todo) => (
+          <li
+            className="todo d-flex align-center justify-between"
+            key={todo.id}
+            style={{
+              textDecoration: todo.completed ? "line-through" : "none",
+            }}
+          >
+            <img
+              onClick={() => handleToggle(todo.id)}
+              src={todo.completed ? Check : Btncheck}
+              alt="Check"
+              className="check"
+            />
+            {editId === todo.id ? (
+              <input
+                type="text"
+                value={editText}
+                onChange={(e) => setEditText(e.currentTarget.value)}
+              />
+            ) : (
+              todo.text
+            )}
+            <div className="icon1">
+              <img
+                src={Edit}
+                width={14.5}
+                height={14.5}
+                style={{ marginRight: "10px" }}
+                onClick={() => handleEditClick(todo.id, todo.text)}
+              />
+              <img
+                src={Del}
+                onClick={() => handleDeleteClick(todo.id)}
+                className="del"
+                alt="Nochecked"
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
         </div>
       </div>
     </div>
