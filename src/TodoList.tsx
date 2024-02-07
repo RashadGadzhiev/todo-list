@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "macro-css";
+import Logo from "./assets/Logo.png";
 
 
 import "./App.module.scss";
@@ -44,7 +45,7 @@ const TodoList: React.FC = () => {
     <div className="main-container">
       <div className="section">
         <div className="content d-flex justify-center mt-50 mb-40">
-          <img src="./src/assets/Logo.png" alt="Logo" />
+          <img src={Logo} alt="" />
         </div>
         <div className="header-info d-flex justify-center mb-50">
           <input
