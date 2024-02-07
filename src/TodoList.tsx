@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "macro-css";
 import Logo from "./assets/Logo.png";
-
-
+import Btncheck from "./assets/btn-check.png";
+import Check from "./assets/check.png";
+import Del from "./assets/del.png";
 import "./App.module.scss";
 
 interface item {
@@ -68,12 +69,12 @@ const TodoList: React.FC = () => {
               >
                 <img
                   onClick={() => handleToggle(todo.id)}
-                  src={todo.completed ? "./src/assets/check.png" : "./src/assets/btn-check.png"}
+                  src={todo.completed ? Check : Btncheck}
                   alt="Check"
                   className="check"
                 />
                 {todo.text}
-                <img src="./src/assets/del.png" 
+                <img src={Del} 
                 onClick={() => handleDeleteClick(todo.id)} 
                 className="del" alt="Nochecked" />
               </li>
